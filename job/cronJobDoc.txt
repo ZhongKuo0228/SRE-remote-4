@@ -1,0 +1,5 @@
+# 請替换 /path/to/ 爲時間 shell script 實際放置路徑
+
+0 0 * * * /path/to/fetch_tracking_summary.sh
+0 8 * * * /path/to/fetch_tracking_summary.sh
+0 16 * * * /path/to/fetch_tracking_summary.sh
