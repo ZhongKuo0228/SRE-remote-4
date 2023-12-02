@@ -45,3 +45,8 @@ export const createFakeTime = (dateString, dayOffset) => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+
+export const getCurrentISOTime = () => {
+    const now = new Date();
+    return now.toISOString();
+};

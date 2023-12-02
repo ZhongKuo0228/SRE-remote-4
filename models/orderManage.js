@@ -99,3 +99,31 @@ export const queryPackageStatusBySnoId = async (sno_id) => {
     }
 };
 
+export const getTrackingStatusCounts = async () => {
+    const query = `
+        SELECT 
+            ts.status, 
+            COUNT(*) as count
+        FROM 
+            tracking_record tr
+        INNER JOIN 
+            tracking_status ts ON tr.status = ts.id
+        GROUP BY 
+            ts.status;
+    `;
+    const conn = await pool.getConnection();
+    try {
+        const [rows] = await conn.query(query);
+        conn.release();
+
+        const statusCounts = rows.reduce((acc, row) => {
+            acc[row.status] = row.count;
+            return acc;
+        }, {});
+
+        return statusCounts;
+    } catch (error) {
+        console.error("Error in getTrackingStatusCounts:", error);
+        throw error;
+    }
+};
