@@ -1,7 +1,9 @@
 import Fastify from "fastify";
 import dotenv from "dotenv";
-import { randomBuildOrder, getPackageStatusBySnoId } from "./controllers/createFackeOrder.js";
+import { randomBuildOrder, getPackageStatusBySnoId } from "./controllers/createFakeOrder.js";
 import { saveQueryOrderDataToCache, getOrderDataFromCache } from "./models/orderCache.js";
+import { getTrackingStatusCounts } from "./models/orderManage.js";
+import { getCurrentISOTime } from "./util/time.js";
 dotenv.config();
 
 const fastify = Fastify({ logger: true });
@@ -58,6 +60,15 @@ fastify.get("/query", async (request, reply) => {
     await saveQueryOrderDataToCache(snoId, data);
 
     return reply.status(200).send({ status: "success", data: data, error: null });
+});
+
+fastify.get("/trackingSummary", async (request, reply) => {
+    const data = await getTrackingStatusCounts();
+    const time = getCurrentISOTime();
+    return reply.status(200).send({
+        created_dt: time,
+        trackingSummary: data,
+    });
 });
 
 const start = async () => {
