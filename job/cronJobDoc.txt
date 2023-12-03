@@ -1,5 +1,6 @@
-# 請替换 /path/to/ 爲時間 shell script 實際放置路徑
+# 請替换 /home/ubuntu/SRE-remote-4/job/ 爲實際 shell script 實際放置路徑
 
-0 0 * * * /path/to/fetch_tracking_summary.sh
-0 8 * * * /path/to/fetch_tracking_summary.sh
-0 16 * * * /path/to/fetch_tracking_summary.sh
+crontab -e
+0 0 * * * /home/ubuntu/SRE-remote-4/job/fetch_tracking_summary.sh
+0 8 * * * /home/ubuntu/SRE-remote-4/job/fetch_tracking_summary.sh
+0 16 * * * /home/ubuntu/SRE-remote-4/job/fetch_tracking_summary.sh
