@@ -1,0 +1,31 @@
+version: "3"
+services:
+    fastify:
+        build: .
+        ports:
+            - "3000:3000"
+        depends_on:
+            - mysql
+            - redis
+
+    mysql:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: yourpassword
+            MYSQL_DATABASE: sre_remote
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql-data:/var/lib/mysql
+            - ./DB_backup/pure_db_backup.sql:/docker-entrypoint-initdb.d/pure_db_backup.sql
+
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis-data:/data
+
+volumes:
+    mysql-data:
+    redis-data:
