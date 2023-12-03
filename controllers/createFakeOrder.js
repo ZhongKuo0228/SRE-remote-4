@@ -23,7 +23,7 @@ export const randomBuildOrder = async (quantity) => {
     let result = [];
     for (let i = 0; i < quantity; i++) {
         const newOrderData = await createFakeOrder();
-        const randomTrackingRecordQuantity = randomNumber(1, 5);
+        const randomTrackingRecordQuantity = randomNumber(4, 7);
         const startTime = createFakeTime(newOrderData.fakeDate, -randomTrackingRecordQuantity);
         for (let i = 1; i < randomTrackingRecordQuantity; i++) {
             await createFakeOrderDetailByFakeDate(newOrderData.snoId, startTime, i);
