@@ -7,7 +7,7 @@ CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 API_PATH="http://localhost:3000/trackingSummary"
 
 # 設定保存 JSON 的路徑 
-SAVE_DIR="$(PWD)/save"
+SAVE_DIR="${PWD}/save"
 # SAVE_DIR="/path/to/save"
 
 # 建立資料夾
