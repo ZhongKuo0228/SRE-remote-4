@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "main": "index.js",
     "type": "module",
-    "repository": "https://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@github.com/ZhongKuo0228/SRE-remote-4.git",
     "author": "ZhongKuo0228 <rt019623@gmail.com>",
     "license": "MIT",
     "dependencies": {
