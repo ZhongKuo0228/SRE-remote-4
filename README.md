@@ -39,6 +39,10 @@
         -   請照官方教學：https://docs.docker.com/engine/install/ubuntu/
         -   修改 user 加入到 docker 的群組，後續不用在使用 sudo 就能使用 docker：`sudo usermod -aG docker ubuntu`，記得要重開一個新的終端機才會生效
         -   確認安裝版本：`docker -v && docker compose version`，以下說明適用於 docker compose v2.0 以上，1.0 的使用者請根據官方說明調整相關指令與配置
+-   專案架構：
+-   ![CleanShot 2023-12-03 at 15 54 45](https://github.com/ZhongKuo0228/SRE-remote-4/assets/119053086/9b011775-bb75-4543-b94a-3cf390d29886)
+
+
 
 ### API Server 說明
 
@@ -52,6 +56,8 @@
     -   清除所有快取：http://18.143.170.134/cacheClean
 -   關聯式資料庫：mysql
     -   Table Schema
+    -   ![CleanShot 2023-12-02 at 15 02 51@2x](https://github.com/ZhongKuo0228/SRE-remote-4/assets/119053086/967b9e72-54f3-4e3a-b691-aad13ca30cac)
+
 -   快取資料庫：redis
     -   快取儲存方式：
         -   使用 String 的方式儲存快取
@@ -82,10 +88,12 @@
 
 -   因爲 API Server 的映像檔是使用 dockerfile 產生的，啓動 docker compose 需要 build 映像檔，指令爲: `docker compose up --build -d`
 -   使用 `docker ps`，看是否有 3 個程式剛剛產生的 container
+-   ![CleanShot 2023-12-03 at 15 15 20@2x](https://github.com/ZhongKuo0228/SRE-remote-4/assets/119053086/25370182-cb19-448b-b93b-5d5a4ad5c47a)
+
 
 ### 清理環境
 
--   關閉 docker compose，需要進到專案資料及，輸入 `docker compose down`
+-   關閉 docker compose，需要進到專案資料，輸入 `docker compose down`
 -   因爲 dokcer compose 內爲了讓 mysql 的資料內容持久化，所以有掛 volume，如果需要連同 volume 的內容一起刪除，請輸入 `docker compose down --volumes`
 
 ### 定期建立總表
@@ -95,4 +103,4 @@
 
 ## 已知 BUG
 
-目前 API Server 使用 docker compose 第一次啓動時，會因爲 mysql 尚未初始化完成，伺服器無法連線 DB 報錯而 Crash，若遇到這個問題時，請先使用 `docker ps -a` 查看 API Server 的 container id，請使用指令 `docker restart <container_id>` 重啓。
+目前 API Server 使用 docker compose 第一次啓動時，會因爲 mysql 尚未初始化完成，伺服器無法連線 DB 報錯而 Crash，若遇到這個問題時，請先使用 `docker ps -a` 查看 API Server 的 container id，再使用指令 `docker restart <container_id>` 重啓。
