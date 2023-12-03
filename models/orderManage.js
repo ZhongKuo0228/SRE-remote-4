@@ -1,4 +1,4 @@
-import pool from "./DBpool.js";
+import { pool } from "./DBpool.js";
 
 export const insertPackageOrder = async (orderData) => {
     const { estimated_delivery, recipient } = orderData;

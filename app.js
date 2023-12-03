@@ -10,7 +10,7 @@ dotenv.config();
 const fastify = Fastify({ logger: true });
 
 fastify.get("/", async (request, reply) => {
-    return { hello: "world" };
+    return reply.status(200).send({ message: "SRE-Remote-4 作業" });
 });
 
 fastify.get("/fake", async (request, reply) => {
@@ -18,7 +18,7 @@ fastify.get("/fake", async (request, reply) => {
     if (!num || isNaN(num)) {
         return reply.status(400).send({ error: "Invalid 'num' parameter" });
     } else if (num < 1) {
-        return reply.status(200).send({ message: "輸入數量爲不能小於 0" });
+        return reply.status(200).send({ message: "輸入數量爲不能小於 1" });
     }
 
     const counter = await randomBuildOrder(num);
@@ -84,12 +84,13 @@ fastify.get("/cacheList", async (request, reply) => {
 
 const start = async () => {
     try {
-        const port = process.env.PORT || 3000;
-        await fastify.listen({ port: port });
+        const port = process.env.SERVER_PORT || 3000;
+        const host = process.env.SERVER_HOST || "127.0.0.1";
+        await fastify.listen({ port, host });
         fastify.log.info(`server listening on ${fastify.server.address().port}`);
     } catch (err) {
         fastify.log.error(err);
-        process.exit(1);
+        setTimeout(start, 5000);
     }
 };
 
