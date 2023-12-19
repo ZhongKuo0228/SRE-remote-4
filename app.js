@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import os from "os";
 import dotenv from "dotenv";
 import { randomBuildOrder, getPackageStatusBySnoId } from "./controllers/createFakeOrder.js";
 import { saveQueryOrderDataToCache, getOrderDataFromCache } from "./models/orderCache.js";
@@ -9,8 +10,41 @@ dotenv.config();
 
 const fastify = Fastify({ logger: true });
 
+function getRandomDarkColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 12)];
+    }
+    return color;
+}
+
+const color = getRandomDarkColor();
+
 fastify.get("/", async (request, reply) => {
-    return reply.status(200).send({ message: "SRE-Remote-4 作業" });
+    const hostname = os.hostname();
+    const timestamp = new Date().toISOString();
+    const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Page Reload</title>
+            <meta http-equiv="refresh" content="1">
+        </head>
+        <body style="color: ${color};">
+            <h1>Task-0-8</h1>
+            <p>Hostname: ${hostname}</p>
+            <p>Timestamp: ${timestamp}</p>
+        </body>
+        </html>
+    `;
+    reply.type("text/html").send(html);
+});
+
+fastify.get("/health", async (request, reply) => {
+    return reply.status(200).send({
+        message: "ok",
+    });
 });
 
 fastify.get("/fake", async (request, reply) => {

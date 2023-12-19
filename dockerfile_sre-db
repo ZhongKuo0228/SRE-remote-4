@@ -1,0 +1,12 @@
+# 使用官方 MySQL 映像作為基礎
+FROM mysql
+
+# 定義構建時的參數
+ARG MYSQL_ROOT_PASSWORD
+
+# 環境變數設定
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+ENV MYSQL_DATABASE sre_remote
+
+# 將數據庫備份文件從主機複製到容器內的初始化目錄
+COPY ./DB_backup/pure_db_backup.sql /docker-entrypoint-initdb.d/
